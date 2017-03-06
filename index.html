@@ -5,16 +5,27 @@
     <title>Circles</title>
     <link rel="stylesheet" href="assets/css/master.css">
     <script src="assets/js/lib/paper-full.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.2/howler.core.min.js" charset="utf-8"></script>
     <script type="text/paperscript" canvas="myCanvas">
 
-      function onKeyDown(event) {
+      var circles = [];
 
-        var maxPoint = new Point(view.size.width, view.size.height);
+      function onKeyDown(event) {
+        var maxPoint = new Point(paper.view.size.width, paper.view.size.height);
         var randomPoint = Point.random();
         var point = maxPoint * randomPoint;
+        var newCircle = new Path.Circle(point, 500);
+        newCircle.fillColor = 'red';
 
-        new Path.Circle(point, 10).fillColor = "red"
+        circles.push(newCircle);
       }
+
+      function onFrame(event) {
+        for (var i = 0; i < circles.length; i++) {
+          circles[i].fillColor.hue += 1;
+          circles[i].scale(0.9);
+        };
+      };
 
     </script>
   </head>
